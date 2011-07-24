@@ -1,5 +1,6 @@
 //var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0081\u00e0\u000b\u0010\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u000c\u0005\u0011\u0001\u0028\u0004\u000a\u0028\u0004\u000c\u001b\u0005\u0011\u0002\u0024\u0029\u0005\u0004\u0024\u0020\u0027\u000d\u0020\u0024\u0010\u0009\u0048\u0000\u0024\u000c\u0005\u0011\u0001\u0024\u0004\u000a\u0024\u0004\u000c\u001b\u0000\u0010\u0001\u00f0\u0001\u0028\u0000\u0002\u0028\u0002\u0000\u0080\u0003\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0032\u0004\u0068\u0069\u0000\u0052\u0065\u0063\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0075\u0073\u0072\u002f\u006d\u0061\u0078\u002f\u0074\u0065\u0073\u0074\u002f\u0072\u0065\u0063\u002e\u0062\u0000";
-var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0000\u0004\u000c\u0002\u0001\u0000\u0001\u0008\u0040\u0000\u0000\u0008\u002d\u0011\u002a\u0028\u003a\u0011\u0001\u0028\u000c\u001b\u0000\u000c\u0001\u00e0\u0001\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0000\u0052\u0065\u0063\u0000\u0000\u0001\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0000\u0000\u002f\u0072\u0065\u0063\u0032\u002e\u0062\u0000";
+//var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0000\u0004\u000c\u0002\u0001\u0000\u0001\u0008\u0040\u0000\u0000\u0008\u002d\u0011\u002a\u0028\u003a\u0011\u0001\u0028\u000c\u001b\u0000\u000c\u0001\u00e0\u0001\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0000\u0052\u0065\u0063\u0000\u0000\u0001\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0000\u0000\u002f\u0072\u0065\u0063\u0032\u002e\u0062\u0000";
+var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u0030\u0015\u0014\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u0010\u0029\u0001\u0008\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0002\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0010\u003a\u0011\u0001\u0030\u0005\u0011\u0003\u0034\u0029\u000d\u0020\u0034\u0020\u0029\u000d\u0024\u0034\u0024\u0004\u000a\u0034\u0000\u000c\u001b\u0000\u0014\u0001\u00f8\u0001\u0004\u0000\u0002\u0028\u0002\u0000\u00c0\u0003\u0038\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u0033\u0004\u0025\u0073\u000a\u0035\u0008\u0068\u0065\u006c\u006c\u006f\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062";
 
 function showstuff(s){
 	var r = "", i;
@@ -75,6 +76,7 @@ var dis = function(){
 		// operand = [] | [immed] | [ind, isfp] | [ind1, ind2, isfp]
 		// [code, mid_operand, left_operand, right_operand]
 		function instruction(){
+			print("ins at " + i);
 			var opcode = byte(), addrmode = byte(), amm, amsd, r, x;
 
 			r = [opcode];
@@ -181,31 +183,34 @@ var dis = function(){
 				case 1:
 					return "" + n[0];
 				case 2:
-					return n[1]? "fp[" + n[0] + "]" : "mp$" + n[0];
+					return (n[1]? "fp" : "mp") + "[" + n[0] + "]";
 				case 3:
-					return (n[2]? "fp[" + n[0] + "]" : "mp$" + n[0]) + "[" + n[1] + "]";
+					i = (n[2]? "fp" : "mp") + "[" + n[0] + "]";
+					return i + "[1][" + i + "[0]]";
+//					return (n[2]? "fp" : "mp") + "[" + n[0] + "][" + n[1] + "]";
 			}
 		}
 
 		var code = [], x, y, m, ins;
 		
+		code.push("var mp = [];");
 		for(x = 0; x < source.data.length; x++)
 			switch((ins = source.data[x]).type){
 				case "bytes":
 				case "words":
 					m = ins.type == "words"? 4 : 1;
 					for(y = 0; y < ins.data.length; y++)
-						code.push("var mp$" + (ins.offset + y*m) + " = " + ins.data[y] + ";");
+						code.push("mp[" + (ins.offset + y*m) + "] = " + ins.data[y] + ";");
 					break;
 				case "string":
-					code.push("var mp$" + ins.offset + " = " + quotes(ins.data) + ";");
+					code.push("mp[" + ins.offset + "] = " + quotes(ins.data) + ";");
 					break;
 				case "ieee754":
 					// TODO: ..
 					break;
 				case "array":
 					for(y = 0; y < ins.data.length; y++)
-						code.push("var mp$" + (ins.offset + y*4) + " = [0, " + ins.data[1] + ", []];");
+						code.push("mp[" + (ins.offset + y*4) + "] = [0, " + ins.data[1] + ", []];");
 					break;
 				case "set":
 					// TODO: ?!#
@@ -215,16 +220,48 @@ var dis = function(){
 					break;
 				case "longs":
 					for(y = 0; y < ins.data.length; y++)
-						code.push("var mp$" + (ins.offset + y*8) + " = [" + ins.data[0] + ", " + ins.data[1] + "];");
+						code.push("mp[" + (ins.offset + y*8) + "] = [" + ins.data[0] + ", " + ins.data[1] + "];");
 			}
-		code.push("function main(mp, fps, pc){");
-		code.push(" var fp = fps[1];");
-		code.push(" switch(pc){");
+		code.push("function main(fps){");
+		code.push(" var fp = fps[1], pc = fps[2];");
+		code.push(" for(;;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
 			code.push("  case " + x + ":");
+			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
-				case 0x0: // nop
+				case 0x00: // nop
 					break;
+				case 0x08: // load
+					code.push("   " + operand(ins, 2) + " = loader(" + operand(ins, 1) + ", " + operand(ins, 0) + ");");
+					break;
+				case 0x0c: // ret
+					code.push("   if(!(fps = fps[0]))");
+					code.push("    return;");
+					code.push("   fp = fps[1];");
+					code.push("   pc = fps[2];");
+					code.push("   break;");
+					break;
+				case 0x0d: // jmp
+					code.push("   pc = " + operand(ins, 2) + ";");
+					code.push("   break;");
+					break;
+				case 0x11: // newa
+					code.push("   " + operand(ins, 2) + " = [0, " + operand(ins, 1) + ", []];");
+					break;
+				// the following seems weird .. documentation suggests
+				// indw, etc grab the value from the array; behaviour
+				// suggests it grabs the address, like indx
+				case 0x28: // indx
+				case 0x52: // indc
+				case 0x72: // indw
+				case 0x73: // indf
+				case 0x74: // indb
+				case 0x91: // indl
+					code.push("   " + operand(ins, 0) + " = [" + operand(ins, 2) + ", " + operand(ins, 1) + "[2]];");
+					break;
+				case 0x29: // movp
+				case 0x2a: // movm
+				case 0x2b: // movmp
 				case 0x2c: // movb
 				case 0x2d: // movw
 				case 0x2e: // movf
@@ -233,13 +270,18 @@ var dis = function(){
 				case 0x3a: // addw
 					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + " + " + operand(ins, 0) + ";"); 
 					break;
+				case 0x51: // insc
+					code.push("   " + operand(ins, 2) + " = insc(" + operand(ins, 2) + ", " + operand(ins, 0) + ", " + operand(ins, 1) + ");"); 
+					break;
 				default:
 					code.push("   // unknown instruction: " + ins[0]);
 			}
 		}
 		code.push(" }");
 		code.push("}");
+		code.push("main([undefined, [], " + source.header.entry_pc + "]);");
 		return code.join("\n");
+//		return Function("loader", "insc", code.join("\n"));
 	}
 
 	var t;
