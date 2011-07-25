@@ -18,7 +18,11 @@ init(c: ref Draw->Context, a: list of string){
 	y := array[2] of int;
 	y[0] = 42;
 	y[1] = 43;
-	z := sys->print("%s %d\n", x, y[0]);
+	z := sys->print("%s %d\n", x, add(y[0], y[1]));
 	z++;
 	init(c, a);
+}
+
+add(a, b: int): int {
+	return a + b;
 }
