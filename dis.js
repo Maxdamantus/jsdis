@@ -31,8 +31,9 @@ var dis = function(){
 	var builtin;
 
 	function comp(i, n){
-		return i < Math.pow(2, n-1)? i : i - Math.pow(2, n);
-		return i < 1 << n-1? i : i - (1 << n);
+		return n == 32? i | 0 :
+			n < 32? i < 1 << n-1? i : i - (1 << n) :
+			i < Math.pow(2, n-1)? i : i - Math.pow(2, n);
 	}
 
 	function read(s){
@@ -299,7 +300,7 @@ var dis = function(){
 		code.push(" var fp = fps[1], pc = fps[2];");
 		code.push(" for(;;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
-			code.push("  case " + x + ": print(\"pc = \" + " + x + ");");
+			code.push("  case " + x + ": /* print(\"pc = \" + " + x + ");*/");
 			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
