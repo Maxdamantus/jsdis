@@ -27,6 +27,13 @@ function replicate(n, f){
 }
 
 var dis = function(){
+	var builtin;
+
+	function comp(i, n){
+		return i < Math.pow(2, n-1)? i : i - Math.pow(2, n);
+		return i < 1 << n-1? i : i - (1 << n);
+	}
+
 	function read(s){
 		var i = 0;
 
@@ -37,10 +44,6 @@ var dis = function(){
 		function chunk(l){
 			i += l;
 			return s.substr(i - l, l);
-		}
-
-		function comp(i, n){
-			return i < 1 << n-1? i : i - (1 << n);
 		}
 
 		function bigend32(){
@@ -142,10 +145,13 @@ var dis = function(){
 
 		function moduleimport(){
 			function functionimport(){
+				print("functionimport @ " + i.toString(16));
 				return { sig: bigend32(), name: utf8() };
 			}
 
-			return replicate(op(), functionimport);
+			var t = replicate(op(), functionimport);
+			print("moduleimport() = " + showstuff(t));
+			return t;
 		}
 
 		function all(){
@@ -182,11 +188,11 @@ var dis = function(){
 		return s.toSource();
 	}
 
-	function makemp(source){
-		var mp = [], x;
+	function makemp(data){
+		var mp = [], ins, x;
 
-		for(x = 0; x < source.data.length; x++)
-			switch((ins = source.data[x]).type){
+		for(x = 0; x < data.length; x++)
+			switch((ins = data[x]).type){
 				case "bytes":
 				case "words":
 					m = ins.type == "words"? 4 : 1;
@@ -213,8 +219,26 @@ var dis = function(){
 					for(y = 0; y < ins.data.length; y++)
 						mp[ins.offset + y*8] = [ins.data[0], ins.data[1]];
 			}
+		return mp;
 	}
 
+	function insc(s, p, c){
+		return s.substr(0, p) + String.fromCharCode(c) + s.substr(p + 1);
+	}
+
+	function run(module){
+		var cur = module([{ name: "init", sig: 0x4244b354 }])[0]([]);
+		do{
+			cur = cur();
+		}while(cur);
+	}
+
+	// loader :: (string, [importing]) -> [exporting]
+	function loader(name, imports){
+		if(name[0] == "$")
+			return builtin[name.substr(1)](imports);
+		// wonder what will go here
+	}
 
 	function exporter(importing, exporting, main){
 		var r = [], x, y;
@@ -222,9 +246,10 @@ var dis = function(){
 		for(x = 0; x < importing.length; x++)
 			for(y = 0; y < exporting.length; y++){
 				if(importing[x].name == exporting[y].name && importing[x].sig == exporting[y].sig){
+					print("exporter matched " + importing[x].name);
 					r[x] = function(pc){
 						return function(fp, ret){
-							return main(pc, ret);
+							return main([false, [], pc], ret);
 						};
 					}(exporting[y].pc);
 					break;
@@ -273,7 +298,7 @@ var dis = function(){
 		code.push(" var fp = fps[1], pc = fps[2];");
 		code.push(" for(;;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
-			code.push("  case " + x + ":");
+			code.push("  case " + x + ": print(\"pc = \" + " + x + ");");
 			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
@@ -349,15 +374,16 @@ var dis = function(){
 		code.push("   throw \"pc out of bounds\";");
 		code.push(" }");
 		code.push("}");
-		code.push("return { main: main, exec: function(){ return main([false, [], entry]), exports: exporter(importing, exports, main) };");
+		code.push("return exporter(importing, exports, main);");
 		code.push("}");
-		return code.join("\n");
-		return Function("exports", "entry", "imports", "loader", "insc", "newmp", code.join("\n"))(
+		//return code.join("\n");
+		return Function("exports", "entry", "imports", "exporter", "loader", "insc", "newmp", code.join("\n"))(
 			source.links,
 			source.entry_pc,
 			source.imports,
-			"TODO: loader",
-			"TODO: insc",
+			exporter,
+			loader,
+			insc,
 			function(data){ // trying not to keep a reference to `source`
 				return function newmp(){
 					return makemp(data);
@@ -365,7 +391,24 @@ var dis = function(){
 			}(source.data));
 	}
 
+	builtin = {
+		Sys: function(importing){
+			var x, ret = [];
+
+			for(x = 0; x < importing.length; x++)
+				if(importing[x].name == "print" && importing[x].sig == comp(0xac849033, 32))
+					ret[x] = function(fp, cont){
+						print("sys->print called somehow! fp = " + fp);
+						return cont;
+					};
+				else
+					throw "requested invalid export (" + importing[x].name + ", " + importing[x].sig + ") from $Sys";
+			return ret;
+		}
+	};
+
 	var t;
 	print(showstuff(t = read(test)));
-	print(showstuff(compile(t)));
+	print(showstuff(t = compile(t)));
+	run(t);
 }();
