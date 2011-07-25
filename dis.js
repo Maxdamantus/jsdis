@@ -173,7 +173,7 @@ var dis = function(){
 	}
 
 	function compile(source){
-		function operand(ins, i){
+		function operand(ins, i, addrof){
 			var n = ins[i + 1];
 			switch(n.length){
 				case 0:
@@ -181,12 +181,16 @@ var dis = function(){
 						return operand(ins, 2);
 					throw "expected operand";
 				case 1:
+					if(addrof)
+						throw "address of immediate";
 					return "" + n[0];
 				case 2:
-					return (n[1]? "fp" : "mp") + "[" + n[0] + "]";
+					i = n[1]? "fp" : "mp";
+					return addrof? "[" + n[0] + ", " + i + "]" : i + "[" + n[0] + "]";
 				case 3:
 					i = (n[2]? "fp" : "mp") + "[" + n[0] + "]";
-					return i + "[1][" + i + "[0]]";
+					return addrof? "[" + i + "[0]+" + n[0] + ", " + i + "[1]]" :
+						i + "[1][" + n[1] + "+" + i + "[0]]";
 //					return (n[2]? "fp" : "mp") + "[" + n[0] + "][" + n[1] + "]";
 			}
 		}
@@ -222,7 +226,7 @@ var dis = function(){
 					for(y = 0; y < ins.data.length; y++)
 						code.push("mp[" + (ins.offset + y*8) + "] = [" + ins.data[0] + ", " + ins.data[1] + "];");
 			}
-		code.push("function main(fps){");
+		code.push("function main(fps, ret){");
 		code.push(" var fp = fps[1], pc = fps[2];");
 		code.push(" for(;;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
@@ -231,8 +235,14 @@ var dis = function(){
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
 					break;
+				case 0x05: // frame
+					code.push("   " + operand(ins, 2) + " = [0, []];");
+					break;
 				case 0x08: // load
 					code.push("   " + operand(ins, 2) + " = loader(" + operand(ins, 1) + ", " + operand(ins, 0) + ");");
+					break;
+				case 0x09: // mcall
+					code.push("   " + operand(ins, 2) + ".main(something);");
 					break;
 				case 0x0c: // ret
 					code.push("   if(!(fps = fps[0]))");
@@ -248,6 +258,9 @@ var dis = function(){
 				case 0x11: // newa
 					code.push("   " + operand(ins, 2) + " = [0, " + operand(ins, 1) + ", []];");
 					break;
+				case 0x27: // lea
+					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1, true) + ";");
+					break;
 				// the following seems weird .. documentation suggests
 				// indw, etc grab the value from the array; behaviour
 				// suggests it grabs the address, like indx
@@ -257,6 +270,7 @@ var dis = function(){
 				case 0x73: // indf
 				case 0x74: // indb
 				case 0x91: // indl
+				// TODO: multiply index by element size .. maybe
 					code.push("   " + operand(ins, 0) + " = [" + operand(ins, 2) + ", " + operand(ins, 1) + "[2]];");
 					break;
 				case 0x29: // movp
@@ -279,12 +293,12 @@ var dis = function(){
 		}
 		code.push(" }");
 		code.push("}");
-		code.push("main([undefined, [], " + source.header.entry_pc + "]);");
+		code.push("return { main: main, entry: source.header.entry_pc, links: source.links };");
 		return code.join("\n");
-//		return Function("loader", "insc", code.join("\n"));
+		return Function("source", "loader", "insc", code.join("\n"))(source, "TODO: loader", "TODO: insc");
 	}
 
 	var t;
 	print(showstuff(t = read(test)));
-	print(compile(t));
+	print(showstuff(compile(t)));
 }();
