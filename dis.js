@@ -1,6 +1,6 @@
 //var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0081\u00e0\u000b\u0010\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u000c\u0005\u0011\u0001\u0028\u0004\u000a\u0028\u0004\u000c\u001b\u0005\u0011\u0002\u0024\u0029\u0005\u0004\u0024\u0020\u0027\u000d\u0020\u0024\u0010\u0009\u0048\u0000\u0024\u000c\u0005\u0011\u0001\u0024\u0004\u000a\u0024\u0004\u000c\u001b\u0000\u0010\u0001\u00f0\u0001\u0028\u0000\u0002\u0028\u0002\u0000\u0080\u0003\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0032\u0004\u0068\u0069\u0000\u0052\u0065\u0063\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0075\u0073\u0072\u002f\u006d\u0061\u0078\u002f\u0074\u0065\u0073\u0074\u002f\u0072\u0065\u0063\u002e\u0062\u0000";
 //var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0000\u0004\u000c\u0002\u0001\u0000\u0001\u0008\u0040\u0000\u0000\u0008\u002d\u0011\u002a\u0028\u003a\u0011\u0001\u0028\u000c\u001b\u0000\u000c\u0001\u00e0\u0001\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0000\u0052\u0065\u0063\u0000\u0000\u0001\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0000\u0000\u002f\u0072\u0065\u0063\u0032\u002e\u0062\u0000";
-var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u0030\u0015\u0014\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u0010\u0029\u0001\u0008\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0002\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0010\u003a\u0011\u0001\u0030\u0005\u0011\u0003\u0034\u0029\u000d\u0020\u0034\u0020\u0029\u000d\u0024\u0034\u0024\u0004\u000a\u0034\u0000\u000c\u001b\u0000\u0014\u0001\u00f8\u0001\u0004\u0000\u0002\u0028\u0002\u0000\u00c0\u0003\u0038\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u0033\u0004\u0025\u0073\u000a\u0035\u0008\u0068\u0065\u006c\u006c\u006f\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062";
+var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u0080\u0017\u0014\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u0010\u0029\u0001\u0008\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0002\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0072\u008a\u0038\u002c\u0000\u002d\u002d\u0038\u0000\u0034\u0028\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0010\u003a\u0011\u0001\u0030\u0005\u0011\u0003\u0038\u0029\u000d\u0020\u0038\u0020\u0029\u000d\u0024\u0038\u0024\u0004\u000a\u0038\u0000\u000c\u001b\u0000\u0014\u0001\u00f8\u0001\u0004\u0000\u0002\u0030\u0002\u0000\u00c0\u0003\u0080\u0040\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u0036\u0004\u0025\u0073\u0020\u0025\u0064\u000a\u0035\u0008\u0068\u0065\u006c\u006c\u006f\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062\u0000";
 
 function showstuff(s){
 	var r = "", i;
@@ -103,6 +103,7 @@ var dis = function(){
 		}
 
 		function datum(){
+			print("data at " + i.toString(16));
 			var code = byte(), count, offset, s, t;
 
 			count = code & 15? code & 15 : op();
@@ -139,8 +140,16 @@ var dis = function(){
 			return { pc: op(), type: op(), sig: bigend32(), name: utf8() };
 		}
 
+		function moduleimport(){
+			function functionimport(){
+				return { sig: bigend32(), name: utf8() };
+			}
+
+			return replicate(op(), functionimport);
+		}
+
 		function all(){
-			var code, types, data = [], name, links, head = header(), x;
+			var code, types, data = [], name, links, imports, head = header(), x;
 
 			code = replicate(head.code_size, instruction);
 			types = replicate(head.type_size, type);
@@ -150,8 +159,9 @@ var dis = function(){
 			}
 			name = utf8();
 			links = replicate(head.link_size, link);
-			// TODO: imports?
-			return { name: name, header: head, code: code, types: types, data: data, links: links };
+			imports = replicate(op(), moduleimport);
+			print("read all: " + i.toString(16));
+			return { name: name, header: head, code: code, types: types, data: data, links: links, imports: imports };
 		}
 	
 		function op(){
@@ -171,6 +181,66 @@ var dis = function(){
 		// TODO: ..
 		return s.toSource();
 	}
+
+	function makemp(source){
+		var mp = [], x;
+
+		for(x = 0; x < source.data.length; x++)
+			switch((ins = source.data[x]).type){
+				case "bytes":
+				case "words":
+					m = ins.type == "words"? 4 : 1;
+					for(y = 0; y < ins.data.length; y++)
+						mp[ins.offset + y*m] = ins.data[y];
+					break;
+				case "string":
+					mp[ins.offset] = ins.data;
+					break;
+				case "ieee754":
+					// TODO: ..
+					break;
+				case "array":
+					for(y = 0; y < ins.data.length; y++)
+						mp[ins.offset + y*4] = [0, ins.data[1], []];
+					break;
+				case "set":
+					// TODO: ?!#
+					break;
+				case "pop":
+					// TODO: ?!#
+					break;
+				case "longs":
+					for(y = 0; y < ins.data.length; y++)
+						mp[ins.offset + y*8] = [ins.data[0], ins.data[1]];
+			}
+	}
+
+
+	function exporter(importing, exporting, main){
+		var r = [], x, y;
+
+		for(x = 0; x < importing.length; x++)
+			for(y = 0; y < exporting.length; y++){
+				if(importing[x].name == exporting[y].name && importing[x].sig == exporting[y].sig){
+					r[x] = function(pc){
+						return function(fp, ret){
+							return main(pc, ret);
+						};
+					}(exporting[y].pc);
+					break;
+				}
+				throw "module has no export (" + importing[x].name + ", " + importing[x].sig.toString(16) + ")";
+			}
+		return r;
+	}
+
+	// module interface:
+	//  module = ([importing]) -> [exporting]
+	//  importing = { name: string, sig: int }
+	//  exporting = (frame /* fp for the call */, return /* returned after fibre's last ret */) -> exporting
+	//  return = () -> exporting
+	// the exporting function returns a continuation
+	// inter-module calls use exporting functions
 
 	function compile(source){
 		function operand(ins, i, addrof){
@@ -197,35 +267,8 @@ var dis = function(){
 
 		var code = [], x, y, m, ins;
 		
-		code.push("var mp = [];");
-		for(x = 0; x < source.data.length; x++)
-			switch((ins = source.data[x]).type){
-				case "bytes":
-				case "words":
-					m = ins.type == "words"? 4 : 1;
-					for(y = 0; y < ins.data.length; y++)
-						code.push("mp[" + (ins.offset + y*m) + "] = " + ins.data[y] + ";");
-					break;
-				case "string":
-					code.push("mp[" + ins.offset + "] = " + quotes(ins.data) + ";");
-					break;
-				case "ieee754":
-					// TODO: ..
-					break;
-				case "array":
-					for(y = 0; y < ins.data.length; y++)
-						code.push("mp[" + (ins.offset + y*4) + "] = [0, " + ins.data[1] + ", []];");
-					break;
-				case "set":
-					// TODO: ?!#
-					break;
-				case "pop":
-					// TODO: ?!#
-					break;
-				case "longs":
-					for(y = 0; y < ins.data.length; y++)
-						code.push("mp[" + (ins.offset + y*8) + "] = [" + ins.data[0] + ", " + ins.data[1] + "];");
-			}
+		code.push("return function(importing){");
+		code.push("var mp = newmp();");
 		code.push("function main(fps, ret){");
 		code.push(" var fp = fps[1], pc = fps[2];");
 		code.push(" for(;;) switch(pc){");
@@ -235,18 +278,29 @@ var dis = function(){
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
 					break;
+				case 0x04: // call
+					// TODO: ..
+					code.push("   print(\"a call!\");");
+					break;
 				case 0x05: // frame
 					code.push("   " + operand(ins, 2) + " = [0, []];");
 					break;
 				case 0x08: // load
-					code.push("   " + operand(ins, 2) + " = loader(" + operand(ins, 1) + ", " + operand(ins, 0) + ");");
+					code.push("   " + operand(ins, 2) + " = loader(" + operand(ins, 1) + ", imports[" + operand(ins, 0) + "]);");
 					break;
 				case 0x09: // mcall
-					code.push("   " + operand(ins, 2) + ".main(something);");
+					code.push("   fps[2] = " + (x + 1) + ";");
+					code.push("   return function(n, f){");
+					code.push("     return function(){");
+					code.push("       return n(f, function(){");
+					code.push("         main(fps, ret);");
+					code.push("       });");
+					code.push("     };");
+					code.push("   }(" + operand(ins, 2) + "[" + operand(ins, 0) + "], " + operand(ins, 1) + ");");
 					break;
 				case 0x0c: // ret
 					code.push("   if(!(fps = fps[0]))");
-					code.push("    return;");
+					code.push("    return ret;");
 					code.push("   fp = fps[1];");
 					code.push("   pc = fps[2];");
 					code.push("   break;");
@@ -291,11 +345,24 @@ var dis = function(){
 					code.push("   // unknown instruction: " + ins[0]);
 			}
 		}
+		code.push("  default:");
+		code.push("   throw \"pc out of bounds\";");
 		code.push(" }");
 		code.push("}");
-		code.push("return { main: main, entry: source.header.entry_pc, links: source.links };");
+		code.push("return { main: main, exec: function(){ return main([false, [], entry]), exports: exporter(importing, exports, main) };");
+		code.push("}");
 		return code.join("\n");
-		return Function("source", "loader", "insc", code.join("\n"))(source, "TODO: loader", "TODO: insc");
+		return Function("exports", "entry", "imports", "loader", "insc", "newmp", code.join("\n"))(
+			source.links,
+			source.entry_pc,
+			source.imports,
+			"TODO: loader",
+			"TODO: insc",
+			function(data){ // trying not to keep a reference to `source`
+				return function newmp(){
+					return makemp(data);
+				};
+			}(source.data));
 	}
 
 	var t;
