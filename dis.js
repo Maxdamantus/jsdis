@@ -1,7 +1,8 @@
 //var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0081\u00e0\u000b\u0010\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u000c\u0005\u0011\u0001\u0028\u0004\u000a\u0028\u0004\u000c\u001b\u0005\u0011\u0002\u0024\u0029\u0005\u0004\u0024\u0020\u0027\u000d\u0020\u0024\u0010\u0009\u0048\u0000\u0024\u000c\u0005\u0011\u0001\u0024\u0004\u000a\u0024\u0004\u000c\u001b\u0000\u0010\u0001\u00f0\u0001\u0028\u0000\u0002\u0028\u0002\u0000\u0080\u0003\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0032\u0004\u0068\u0069\u0000\u0052\u0065\u0063\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0075\u0073\u0072\u002f\u006d\u0061\u0078\u002f\u0074\u0065\u0073\u0074\u002f\u0072\u0065\u0063\u002e\u0062\u0000";
 //var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0000\u0004\u000c\u0002\u0001\u0000\u0001\u0008\u0040\u0000\u0000\u0008\u002d\u0011\u002a\u0028\u003a\u0011\u0001\u0028\u000c\u001b\u0000\u000c\u0001\u00e0\u0001\u0030\u0002\u0000\u00c0\u0034\u0000\u0024\u0053\u0079\u0073\u0000\u0052\u0065\u0063\u0000\u0000\u0001\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0000\u0000\u002f\u0072\u0065\u0063\u0032\u002e\u0062\u0000";
 
-var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u0080\u0019\u0014\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u0010\u0029\u0001\u0008\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0002\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0072\u008a\u0038\u002c\u0000\u002d\u0029\u0038\u0000\u0038\u0072\u008a\u003c\u002c\u0001\u003a\u00ad\u0038\u003c\u0000\u0034\u0028\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0010\u003a\u0011\u0001\u0030\u0005\u0011\u0003\u003c\u0029\u000d\u0020\u003c\u0020\u0029\u000d\u0024\u003c\u0024\u0004\u000a\u003c\u0000\u000c\u001b\u0000\u0014\u0001\u00f8\u0001\u0004\u0000\u0002\u0030\u0002\u0000\u00c0\u0003\u0080\u0040\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u0036\u0004\u0025\u0073\u0020\u0025\u0064\u000a\u0035\u0008\u0068\u0065\u006c\u006c\u006f\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062\u0000";
+
+var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u00d0\u001c\u0030\u0004\u0001\u0000\u0003\u0008\u0040\u0000\u0000\u0020\u0029\u0001\u0018\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0002\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0072\u008a\u0038\u002c\u0000\u002d\u0029\u0038\u0000\u0038\u0072\u008a\u003c\u002c\u0001\u003a\u00ad\u0038\u003c\u0000\u0034\u0028\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0020\u003a\u0011\u0001\u0030\u0076\u0001\u0028\u0080\u0040\u0077\u0000\u0008\u0028\u0086\u00ca\u0010\u0080\u0040\u001b\u0005\u0011\u0003\u003c\u0029\u000d\u0020\u003c\u0020\u0029\u000d\u0024\u003c\u0024\u0004\u000a\u003c\u0000\u000c\u001b\u0000\u0030\u0002\u00c3\u0080\u0001\u0004\u0000\u0002\u0030\u0002\u0000\u00c0\u0003\u0080\u0048\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u0036\u0004\u0025\u0073\u0020\u0025\u0064\u000a\u0082\u0008\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0028\u0035\u0018\u0068\u0065\u006c\u006c\u006f\u0081\u0028\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0003\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062\u0000";
 
 function showstuff(s){
 	var r = "", i;
@@ -136,7 +137,7 @@ var dis = function(){
 					return { type: "pop", offset: offset, count: count };
 				case 8:
 					return { type: "longs", offset: offset, data: replicate(count, function(){
-						return replicate(4, byte);
+						return replicate(8, byte);
 					}) };
 			}
 		}
@@ -191,7 +192,7 @@ var dis = function(){
 	}
 
 	function makemp(data){
-		var mp = [], ins, x;
+		var mp = [], ins, x, y;
 
 		for(x = 0; x < data.length; x++)
 			switch((ins = data[x]).type){
@@ -218,9 +219,13 @@ var dis = function(){
 					// TODO: ?!#
 					break;
 				case "longs":
+					// TODO: 0xff << 24 < 0
 					for(y = 0; y < ins.data.length; y++)
-						mp[ins.offset + y*8] = [ins.data[0], ins.data[1]];
+						mp[ins.offset + y*8] = [
+							ins.data[y][4] << 24 | ins.data[y][5] << 16 | ins.data[y][6] << 8 | ins.data[y][7],
+							ins.data[y][0] << 24 | ins.data[y][1] << 16 | ins.data[y][2] << 8 | ins.data[y][3]];
 			}
+		print("mp = " + mp.toSource());
 		return mp;
 	}
 
@@ -295,12 +300,12 @@ var dis = function(){
 		var code = [], x, y, m, ins;
 		
 		code.push("return function(importing){");
-		code.push("var mp = newmp();");
+		code.push("var mp = newmp(), tmp;");
 		code.push("function main(fps, ret){");
 		code.push(" var fp = fps[1], pc = fps[2];");
 		code.push(" for(;;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
-			code.push("  case " + x + ": /* print(\"pc = \" + " + x + ");*/");
+			code.push("  case " + x + ": /*print(\"pc = \" + " + x + ");*/");
 			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
@@ -361,13 +366,48 @@ var dis = function(){
 				case 0x2c: // movb
 				case 0x2d: // movw
 				case 0x2e: // movf
+				case 0x76: // movl
 					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + ";");
 					break;
 				case 0x3a: // addw
+				case 0x53: // addc
+				case 0x39: // addb
+				case 0x3b: // addf
 					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + " + " + operand(ins, 0) + ";"); 
+					break;
+				case 0x77: // addl
+					// TODO: check logic .. negatives?
+					code.push("   tmp = (" + operand(ins, 1) + "[0] + " + operand(ins, 0) + "[0]) % 0x100000000;");
+					code.push("   " + operand(ins, 2) + " = [tmp, (tmp < " + operand(ins, 1) + "[0]? 1 : 0) + " +
+							operand(ins, 1) + "[1] + " + operand(ins, 0) + "[1]];");
 					break;
 				case 0x51: // insc
 					code.push("   " + operand(ins, 2) + " = insc(" + operand(ins, 2) + ", " + operand(ins, 0) + ", " + operand(ins, 1) + ");"); 
+					break;
+				case 0x5a: // bleb
+				case 0x60: // blew
+				case 0x66: // blef
+				case 0x6c: // blec
+				case 0x83: // blel
+					// TODO: handle blel
+					code.push("   if(" + operand(ins, 1) + " <= " + operand(ins, 0) + "){");
+					code.push("    pc = " + operand(ins, 2) + ";");
+					code.push("    break;");
+					code.push("   }");
+					break;
+				case 0x63: // beqf
+				case 0x86: // beql
+				case 0x69: // beqc
+				case 0x57: // beqb
+				case 0x5d: // beqw
+					if(ins[0] == 0x86) // blel
+						code.push("   if(" + operand(ins, 1) + "[0] == " + operand(ins, 0) + "[0] && " +
+								operand(ins, 1) + "[1] == " + operand(ins, 0) + "[1]){");
+					else
+						code.push("   if(" + operand(ins, 1) + " == " + operand(ins, 0) + "){");
+					code.push("    pc = " + operand(ins, 2) + ";");
+					code.push("    break;");
+					code.push("   }");
 					break;
 				default:
 					code.push("   // unknown instruction: " + ins[0]);
@@ -380,6 +420,7 @@ var dis = function(){
 		code.push("return exporter(importing, exports, main);");
 		code.push("}");
 		//return code.join("\n");
+		print(code.join("\n"));
 		return Function("exports", "entry", "imports", "exporter", "loader", "insc", "newmp", code.join("\n"))(
 			source.links,
 			source.entry_pc,
@@ -412,6 +453,6 @@ var dis = function(){
 
 	var t;
 	print(showstuff(t = read(test)));
-	print(showstuff(t = compile(t)));
+	/*print*/(showstuff(t = compile(t)));
 	run(t);
 }();

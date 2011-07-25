@@ -9,6 +9,8 @@ RefTest: module {
         init: fn(c: ref Draw->Context, a: list of string);
 };
 
+w := big 0;
+
 init(c: ref Draw->Context, a: list of string){
         sys = load Sys Sys->PATH;
         x := "hello";
@@ -20,7 +22,8 @@ init(c: ref Draw->Context, a: list of string){
 	y[1] = 43;
 	z := sys->print("%s %d\n", x, add(y[0], y[1]));
 	z++;
-	init(c, a);
+	if(w++ != big 40)
+		init(c, a);
 }
 
 add(a, b: int): int {
