@@ -25,14 +25,14 @@ init(c: ref Draw->Context, a: list of string){
 	z++;
 #	if(w++ != big 5)
 #		init(c, a);
-	spawn th1();
-	spawn th2();
-#	d := chan of int;
-#	spawn chantest(d);
-	spawn thread();
-	while(s != 1234);
+#	spawn th1();
+#	spawn th2();
+	d := chan of int;
+	spawn chantest(d);
+#	spawn thread();
+#	while(s != 1234);
 	sys->print("end!!");
-#	sys->print("%d\n", <-d);
+	sys->print("%d\n", <-d);
 }
 
 add(a, b: int): int {
@@ -43,9 +43,9 @@ thread(){
 	s = 1234;
 }
 
-#chantest(a: chan of int){
-#	a<- = 42;
-#}
+chantest(a: chan of int){
+	a<- = 42;
+}
 
 th1(){
 	for(;;)

@@ -1,4 +1,4 @@
-var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u0080\u002e\u0038\u0007\u0001\u0000\u0006\u0008\u0040\u0000\u0000\u0020\u0029\u0001\u0014\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0034\u002c\u0000\u002d\u0015\u002a\u0034\u0000\u0072\u008a\u0034\u002c\u0001\u002d\u0015\u002b\u0034\u0000\u0005\u0011\u0005\u0034\u0029\u0005\u0004\u0034\u0020\u0029\u000d\u0028\u0034\u0024\u0076\u0005\u0008\u0034\u0028\u0072\u008a\u0038\u002c\u0000\u002d\u0029\u0038\u0000\u0038\u0072\u008a\u003c\u002c\u0001\u003a\u00ad\u0038\u003c\u0000\u0034\u0030\u0027\u000d\u0030\u0034\u0010\u0009\u0048\u0000\u0034\u0020\u003a\u0011\u0001\u0030\u0005\u0011\u0003\u003c\u0006\u000a\u003c\u0024\u0005\u0011\u0003\u003c\u0006\u000a\u003c\u0029\u0005\u0011\u0002\u003c\u0006\u000a\u003c\u0022\u005d\u00d2\u001c\u0084\u00d2\u001d\u000d\u001a\u001b\u0005\u0011\u0004\u0038\u0029\u0005\u0010\u0038\u0020\u0027\u000d\u003c\u0038\u0010\u0009\u0048\u0000\u0038\u0020\u000c\u001b\u002d\u0010\u0084\u00d2\u001c\u000c\u001b\u0005\u0011\u0004\u0024\u0029\u0005\u0024\u0024\u0020\u0027\u000d\u0020\u0024\u0010\u0009\u0048\u0000\u0024\u0020\u000d\u001a\u0024\u0005\u0011\u0004\u0024\u0029\u0005\u0028\u0024\u0020\u0027\u000d\u0020\u0024\u0010\u0009\u0048\u0000\u0024\u0020\u000d\u001a\u0029\u0000\u0038\u0002\u00ce\u00e0\u0001\u0004\u0000\u0002\u0020\u0000\u0003\u0028\u0000\u0004\u0028\u0002\u0000\u0080\u0005\u0038\u0002\u0000\u00c0\u0006\u0080\u0040\u0002\u0000\u00f0\u0034\u0000\u0024\u0053\u0079\u0073\u003b\u0004\u0025\u0073\u0020\u0025\u0062\u0064\u0020\u0025\u0064\u0021\u000a\u0081\u0008\u0000\u0000\u0000\u0000\u0000\u0012\u00d6\u0087\u0035\u0010\u0065\u006e\u0064\u0021\u0021\u0035\u0014\u0068\u0065\u006c\u006c\u006f\u0021\u001c\u0000\u0000\u0000\u0000\u0038\u0024\u0074\u0068\u0072\u0065\u0061\u0064\u0031\u0021\u0038\u0028\u0074\u0068\u0072\u0065\u0061\u0064\u0032\u0021\u0081\u0030\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0006\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u006a\u0073\u0064\u0069\u0073\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062";
+var test = "\u00c0\u000c\u0080\u0030\u0080\u0040\u0082\u00d0\u0025\u0038\u0005\u0001\u0000\u0004\u0008\u0040\u0000\u0000\u0028\u0029\u0001\u001c\u0028\u0051\u0051\u0001\u0080\u0069\u0028\u0051\u0051\u0005\u0080\u0073\u0028\u0051\u0051\u0005\u0080\u0074\u0028\u0011\u0051\u0001\u0002\u002c\u0072\u008a\u0038\u002c\u0000\u002d\u0015\u002a\u0038\u0000\u0072\u008a\u0038\u002c\u0001\u002d\u0015\u002b\u0038\u0000\u0005\u0011\u0003\u0038\u0029\u0005\u0008\u0038\u0020\u0029\u000d\u0028\u0038\u0024\u0076\u0005\u0010\u0038\u0028\u0072\u008a\u003c\u002c\u0000\u002d\u0029\u003c\u0000\u003c\u0072\u008a\u0080\u0040\u002c\u0001\u003a\u00ad\u003c\u0080\u0040\u0000\u0038\u0030\u0027\u000d\u0034\u0038\u0010\u0009\u0048\u0000\u0038\u0028\u003a\u0011\u0001\u0034\u0013\u0059\u0000\u0030\u0005\u0011\u0002\u0080\u0040\u0029\u000d\u0030\u0080\u0040\u0020\u0006\u000a\u0080\u0040\u0023\u0005\u0011\u0002\u003c\u0029\u0005\u0018\u003c\u0020\u0027\u000d\u0080\u0040\u003c\u0010\u0009\u0048\u0000\u003c\u0028\u0005\u0011\u0002\u003c\u0029\u0005\u0004\u003c\u0020\u0019\u000d\u0030\u003c\u0024\u0027\u000d\u0080\u0040\u003c\u0010\u0009\u0048\u0000\u003c\u0028\u000c\u001b\u0018\u0011\u002a\u0020\u000c\u001b\u0000\u0038\u0002\u00e3\u00a0\u0001\u0004\u0000\u0002\u0028\u0002\u0000\u0080\u0003\u0038\u0002\u0000\u00c0\u0004\u0080\u0048\u0002\u0000\u00f8\u0034\u0000\u0024\u0053\u0079\u0073\u0033\u0004\u0025\u0064\u000a\u003b\u0008\u0025\u0073\u0020\u0025\u0062\u0064\u0020\u0025\u0064\u0021\u000a\u0081\u0010\u0000\u0000\u0000\u0000\u0000\u0012\u00d6\u0087\u0035\u0018\u0065\u006e\u0064\u0021\u0021\u0035\u001c\u0068\u0065\u006c\u006c\u006f\u0021\u0024\u0000\u0000\u0000\u0000\u0081\u0030\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u0000\u0000\u0004\u0042\u0044\u00b3\u0054\u0069\u006e\u0069\u0074\u0000\u0001\u0001\u00ac\u0084\u0090\u0033\u0070\u0072\u0069\u006e\u0074\u0000\u0000\u002f\u006a\u0073\u0064\u0069\u0073\u002f\u0052\u0065\u0066\u0054\u0065\u0073\u0074\u002e\u0062\u0000";
 
 function showstuff(s){
 	var r = "", i;
@@ -232,7 +232,7 @@ var dis = function(){
 	var procs = [];
 
 	function start(module){
-		procs.push(module([{ name: "init", sig: 0x4244b354 }])[0]([]));
+		procs.push(module([{ name: "init", sig: 0x4244b354 }])[0]([0,[]]));
 	}
 
 	// keep calling this until it returns 0
@@ -242,11 +242,16 @@ var dis = function(){
 		if(procs.length > 0)
 			if(r = procs[n = Math.random()*procs.length | 0]())
 				procs[n] = r;
-			else if(procs.length == 1)
-				procs.pop();
 			else
-				procs[n] = procs.pop();
+				rem(procs, n);
 		return procs.length;
+	}
+
+	function rem(arr, n){
+		if(arr.length == 1)
+			arr.pop();
+		else
+			arr[n] = arr.pop();
 	}
 
 	function runall(){
@@ -256,18 +261,37 @@ var dis = function(){
 	function spawner(fun){
 		return procs.push(fun) - 1;
 	}
-/*
+
 	function channel(){
 		var receivers = [], senders = [];
 
 		function recv(ptr, cont){
-			procs.push(
-			ptr[1][ptr[0]]
+			var n;
+
+			if(senders.length){
+				ptr[1][ptr[0]] = senders[n = Math.random()*senders.length | 0][0];
+				procs.push(senders[n][1]);
+				procs.push(cont);
+				rem(senders, n);
+			}else
+				receivers.push([ptr, cont]);
 		}
 
 		function send(val, cont){
+			var n, ptr;
+
+			if(receivers.length){
+				ptr = receivers[n = Math.random()*receivers.length | 0][0];
+				ptr[1][ptr[0]] = val;
+				procs.push(receivers[n][1]);
+				procs.push(cont);
+				rem(receivers, n);
+			}else
+				senders.push([val, cont]);
 		}
-		*/
+
+		return [send, recv];
+	}
 
 	// loader :: (string, [importing]) -> [exporting]
 	function loader(name, imports){
@@ -285,7 +309,7 @@ var dis = function(){
 					print("exporter matched " + importing[x].name);
 					r[x] = function(pc){
 						return function(fp, ret){
-							return main([false, [], pc], ret);
+							return main([false, [0, []], pc], ret);
 						};
 					}(exporting[y].pc);
 					break;
@@ -307,11 +331,23 @@ var dis = function(){
 		}
 
 		return {
-			int: get(4),
+			word: get(4),
 			byte: get(1),
-			long: get(8),
-			string: get(4),
-			pointer: get(4)
+			dword: get(8),
+		};
+	}
+
+	function pointer(base, offs){
+		return {
+			base: base, offs: offs,
+
+			toString: function(){
+				return base + "[1][" + base + "[0] + " + offs + "]";
+			},
+
+			addrof: function(){
+				return "[" + offs + " + " + base + "[0], " + base + "[1]]"
+			}
 		};
 	}
 
@@ -325,7 +361,7 @@ var dis = function(){
 
 	function compile(source){
 		function operand(ins, i, addrof){
-			var n = ins[i + 1];
+			var n = ins[i + 1], j;
 			switch(n.length){
 				case 0:
 					if(i == 0)
@@ -336,12 +372,18 @@ var dis = function(){
 						throw "address of immediate";
 					return "" + n[0];
 				case 2:
+					j = pointer(n[1]? "fp" : "mp", n[0]);
+					return addrof? j.addrof() : j.toString();
 					i = n[1]? "fp" : "mp";
-					return addrof? "[" + n[0] + ", " + i + "]" : i + "[" + n[0] + "]";
+					return addrof? "[" + n[0] + " + " + i + "[0], " + i + "[1]]" : i + "[1][" + i + "[0] + " + n[0] + "]";
 				case 3:
-					i = (n[2]? "fp" : "mp") + "[" + n[0] + "]";
-					return addrof? "[" + i + "[0]+" + n[0] + ", " + i + "[1]]" :
-						i + "[1][" + n[1] + "+" + i + "[0]]";
+					j = pointer(n[2]? "fp" : "mp", n[0]);
+					j = pointer(j, n[1]);
+					return addrof? j.addrof() : j.toString();
+					j = n[2]? "fp" : "mp";
+					i = j + "[1][" + j + "[0] + " + n[0] + "]";
+					return addrof? "[" + j + "[0] + " + n[1] + ", " + j + "[1]]" :
+						i + "[1][" + n[1] + " + " + i + "[0]]";
 //					return (n[2]? "fp" : "mp") + "[" + n[0] + "][" + n[1] + "]";
 			}
 		}
@@ -349,7 +391,7 @@ var dis = function(){
 		var code = [], x, y, m, ins;
 		
 		code.push("return function(importing){");
-		code.push("var mp = newmp(), tmp;");
+		code.push("var mp = [0, newmp()], tmp;");
 		code.push("function main(fps, ret){");
 		code.push(" var fp = fps[1], pc = fps[2], ic;");
 		code.push(" for(ic = 0; ic++ < 10000;) switch(pc){");
@@ -408,7 +450,21 @@ var dis = function(){
 				case 0x16: // newcm
 				case 0x17: // newcmp
 				case 0x8f: // newcl
-					code.push("   " + operand(ins, 2) + " = [];");
+					code.push("   " + operand(ins, 2) + " = channel();");
+					break;
+				case 0x18: // send
+					code.push("   fps[2] = " + (x + 1) + ";");
+					code.push("   " + operand(ins, 2) + "[0](" + operand(ins, 1) + ", function(){");
+					code.push("    return main(fps, ret);");
+					code.push("   });");
+					code.push("   return;");
+					break;
+				case 0x19: // recv
+					code.push("   fps[2] = " + (x + 1) + ";");
+					code.push("   " + operand(ins, 1) + "[1](" + operand(ins, 2, true) + ", function(){");
+					code.push("    return main(fps, ret);");
+					code.push("   });");
+					code.push("   return;");
 					break;
 				case 0x27: // lea
 					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1, true) + ";");
@@ -475,7 +531,7 @@ var dis = function(){
 					code.push("   }");
 					break;
 				default:
-					code.push("   // unknown instruction: " + ins[0]);
+					code.push("   // unknown instruction: " + ins[0].toString(16));
 			}
 		}
 		code.push("  default:");
@@ -488,13 +544,14 @@ var dis = function(){
 		code.push("}");
 		//return code.join("\n");
 		print(code.join("\n"));
-		return Function("exports", "entry", "imports", "exporter", "loader", "spawner", "insc", "newmp", code.join("\n"))(
+		return Function("exports", "entry", "imports", "exporter", "loader", "spawner", "channel", "insc", "newmp", code.join("\n"))(
 			source.links,
 			source.entry_pc,
 			source.imports,
 			exporter,
 			loader,
 			spawner,
+			channel,
 			insc,
 			function(data){ // trying not to keep a reference to `source`
 				return function newmp(){
@@ -521,7 +578,7 @@ var dis = function(){
 	};
 
 	function printx(args){
-		var fmt = args.string(), p, c, done, isbig, out = [];
+		var fmt = args.word(), p, c, done, isbig, out = [];
 
 		for(p = 0; (c = fmt.indexOf("%", p)) >= 0; p = c){
 			out.push(fmt.substr(p, c - p));
@@ -529,14 +586,14 @@ var dis = function(){
 			for(done = false; !done && c < fmt.length;)
 				switch(fmt[++c]){
 					case "s":
-						out.push(args.string());
+						out.push(args.word());
 						done = true;
 						break;
 					case "d":
 						if(isbig)
-							out.push(args.long()); // TODO: ..
+							out.push(args.dword()); // TODO: ..
 						else
-							out.push(args.int() | 0);
+							out.push(args.word() | 0);
 						done = true;
 						break;
 					case "b":
