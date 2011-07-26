@@ -33,6 +33,11 @@ init(c: ref Draw->Context, a: list of string){
 #	while(s != 1234);
 	sys->print("end!!");
 	sys->print("%d\n", <-d);
+	test := array[10] of int;
+	for(i := 0; i < len test; i++)
+		test[i] = i;
+	randomise(test);
+	printarr(test);
 }
 
 add(a, b: int): int {
@@ -41,6 +46,18 @@ add(a, b: int): int {
 
 thread(){
 	s = 1234;
+}
+
+randomise(arr: array of int){
+	c := chan of int;
+	for(i := 0; i < len arr; i++)
+		spawn put(arr, i, c);
+	for(i = 0; i < len arr; i++)
+		c<- = arr[i];
+}
+
+put(arr: array of int, i: int, c: chan of int){
+	arr[i] = <-c;
 }
 
 chantest(a: chan of int){
@@ -55,4 +72,33 @@ th1(){
 th2(){
 	for(;;)
 		sys->print("thread2!");
+}
+
+printarr(arr: array of int){
+	for(x := 0; x < len arr; x++)
+		sys->print("[%d] = %d\n", x, arr[x]);
+}
+
+swap(arr: array of int, m: int, n: int){
+	t := arr[m];
+	arr[m] = arr[n];
+	arr[n] = t;
+}
+
+parasort(arr: array of int, notify: chan of int){
+	if(len arr < 3){
+		if(arr[0] > arr[1])
+			swap(arr, 0, 1);
+	}else{
+		pv := arr[store := 0];
+		for(x := 0; x < len arr; x++)
+			if(arr[x] <= pv)
+				swap(arr, x, store++);
+		c := chan of int;
+		spawn parasort(arr[0:pv], c);
+		spawn parasort(arr[pv+1:], c);
+		<-c; <-c;
+	}
+	if(notify != nil)
+		notify<- = 0;
 }
