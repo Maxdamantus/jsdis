@@ -15,17 +15,11 @@ init(c: ref Draw->Context, a: list of string){
 	for(i := 0; i < len test; i++)
 		test[i] = i;
 	randomise(test);
+	sys->print("before:\n");
 	printarr(test);
-	sys->print("--");
-	printarr(test[0:5]);
-	sys->print("--");
-	printarr(test[1:]);
-	sys->print("--");
-	printarr(test[10:]);
-	sys->print("--");
-	sys->print("--");
 	parasort(test, nil);
-#	printarr(test);
+	sys->print("after:\n");
+	printarr(test);
 }
 
 randomise(arr: array of int){
@@ -57,19 +51,19 @@ swap(arr: array of int, m: int, n: int){
 }
 
 parasort(arr: array of int, notify: chan of int){
-	printarr(arr);
-	sys->print("--");
 	if(len arr == 2){
 		if(arr[0] > arr[1])
 			swap(arr, 0, 1);
 	}else if(len arr > 2){
 		pv := arr[store := 0];
+		swap(arr, len arr - 1, 0);
 		for(x := 0; x < len arr - 1; x++)
-			if(arr[x] <= pv)
+			if(arr[x] < pv)
 				swap(arr, x, store++);
+		swap(arr, store, len arr - 1);
 		c := chan of int;
-		spawn parasort(arr[0:pv], c);
-		spawn parasort(arr[pv+1:], c);
+		spawn parasort(arr[0:store], c);
+		spawn parasort(arr[store+1:], c);
 		<-c; <-c;
 	}
 	if(notify != nil)
