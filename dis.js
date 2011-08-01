@@ -444,8 +444,38 @@ var dis = function(){
 					code.push("   pc = " + operand(ins, 2) + ";");
 					code.push("   break;");
 					break;
+				case 0x0f: // exit
+					code.push("   return;");
+					break;
 				case 0x11: // newa
 					code.push("   " + operand(ins, 2) + " = [0, " + operand(ins, 1) + ", []];");
+					break;
+				case 0x8e: // consl
+				case 0x1a: // consb
+				case 0x1b: // consw
+				case 0x1c: // consp
+				case 0x1d: // consf
+				case 0x1e: // consm
+				case 0x1f: // consmp
+					// Should I add a length element?
+					code.push("   " + operand(ins, 2) + " = [" + operand(ins, 1) + ", " + operand(ins, 2) + "];");
+					break;
+				case 0x20: // headb
+				case 0x21: // headw
+				case 0x22: // headp
+				case 0x23: // headf
+				case 0x24: // headm
+				case 0x25: // headmp
+				case 0x8d: // headl
+					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + "[0];");
+					break;
+				case 0x26: // tail
+					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + "[1];");
+					break;
+				case 0x56: // lenl
+					code.push("   for(tmp = 0, tmq = " + operand(ins, 1) + "; tmq; tmp++, tmq = tmq[1]);");
+					code.push("   " + operand(ins, 2) + " = tmp;");
+					code.push("   tmq = undefined;");
 					break;
 				case 0x12: // newcb
 				case 0x13: // newcw
@@ -570,7 +600,7 @@ var dis = function(){
 					code.push("   tmq = " + operand(ins, 1) + ";");
 					code.push("   " + operand(ins, 2) + " = [tmp[0] + tmq, " + operand(ins, 0) + " - tmq, tmp[2]];");
 					break;
-				default:
+								default:
 					code.push("   // unknown instruction: " + ins[0].toString(16));
 			}
 		}
