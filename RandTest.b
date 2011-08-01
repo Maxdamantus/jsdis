@@ -11,7 +11,7 @@ RandTest: module {
 
 init(c: ref Draw->Context, a: list of string){
 	sys = load Sys Sys->PATH;
-	test := array[10] of int;
+	test := array[1000] of int;
 	for(i := 0; i < len test; i++)
 		test[i] = i;
 	randomise(test);
