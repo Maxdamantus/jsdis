@@ -335,7 +335,7 @@ var dis = function(){
 			aborts.push(ptr[1][ptr[0] + 8 + x*4][0](t[1][t[0]], abortfn(aborts.length)));
 		}
 		for(x = 0; x < nr; x++)
-			aborts.push(ptr[1][ptr[0] + 8 + ns*8 + x*4][1](ptr[1][ptr[0] + 8 + x*4 + 4], abortfn(aborts.length)));
+			aborts.push(ptr[1][ptr[0] + 8 + ns*8 + x*4][1](ptr[1][ptr[0] + 8 + ns*8 + x*4 + 4], abortfn(aborts.length)));
 	}
 
 	// loader :: (string, [importing]) -> [exporting]
