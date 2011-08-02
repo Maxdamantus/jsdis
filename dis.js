@@ -1,4 +1,4 @@
-var test = snarf("ListTest.dis");
+var test = snarf("RandTest.dis");
 
 function showstuff(s){
 	var r = "", i;
@@ -264,6 +264,15 @@ var dis = function(){
 		return procs.push(fun) - 1;
 	}
 
+	function crem(arr, n){
+		if(n == arr.length - 1)
+			arr.pop();
+		else{
+			arr[n] = arr.pop();
+			arr[n][2] = n;
+		}
+	}
+
 	function channel(){
 		var receivers = [], senders = [];
 
@@ -276,8 +285,12 @@ var dis = function(){
 				if(cont)
 					procs.push(cont);
 				rem(senders, n);
-			}else
-				receivers.push([ptr, cont]);
+			}else{
+				receivers.push(n = [ptr, cont, receivers.length]);
+				return function(){
+					rem(receivers, n[2]);
+				};
+			}
 		}
 
 		function send(val, cont){
@@ -290,11 +303,39 @@ var dis = function(){
 				if(cont)
 					procs.push(cont);
 				rem(receivers, n);
-			}else
-				senders.push([val, cont]);
+			}else{
+				senders.push(n = [val, cont, senders.length]);
+				return function(){
+					rem(senders, n[2]);
+				};
+			}
 		}
 
 		return [send, recv];
+	}
+
+	function alt(ptr, dst, cont){
+		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], x, t;
+
+		function abortfn(n){
+			return function(){
+				var x;
+
+				for(x = 0; x < aborts.length; x++)
+					if(x != n)
+						aborts[x]();
+				dst[1][dst[0]] = x;
+				procs.push(cont);
+			};
+		}
+
+		// hopefully these are actually channels and pointers
+		for(x = 0; x < ns; x++){
+			t = ptr[1][ptr[0] + 8 + x*4 + 4]; // pointer to val
+			aborts.push(ptr[1][ptr[0] + 8 + x*4][0](t[1][t[0]], abortfn(aborts.length)));
+		}
+		for(x = 0; x < nr; x++)
+			aborts.push(ptr[1][ptr[0] + 8 + ns*8 + x*4][1](ptr[1][ptr[0] + 8 + x*4 + 4], abortfn(aborts.length)));
 	}
 
 	// loader :: (string, [importing]) -> [exporting]
