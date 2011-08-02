@@ -324,7 +324,7 @@ var dis = function(){
 				for(x = 0; x < aborts.length; x++)
 					if(x != n)
 						aborts[x]();
-				dst[1][dst[0]] = x;
+				dst[1][dst[0]] = n;
 				procs.push(cont);
 			};
 		}
