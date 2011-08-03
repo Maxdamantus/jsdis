@@ -1,4 +1,4 @@
-var test = snarf("RandTest.dis");
+var test = snarf("AltTest.dis");
 
 function showstuff(s){
 	var r = "", i;
@@ -265,6 +265,7 @@ var dis = function(){
 	}
 
 	function crem(arr, n){
+		print("crem; arr.length = " + arr.length + "; n = " + n);
 		if(n == arr.length - 1)
 			arr.pop();
 		else{
@@ -284,11 +285,11 @@ var dis = function(){
 				procs.push(senders[n][1]);
 				if(cont)
 					procs.push(cont);
-				rem(senders, n);
+				crem(senders, n);
 			}else{
 				receivers.push(n = [ptr, cont, receivers.length]);
 				return function(){
-					rem(receivers, n[2]);
+					crem(receivers, n[2]);
 				};
 			}
 		}
@@ -302,40 +303,75 @@ var dis = function(){
 				procs.push(receivers[n][1]);
 				if(cont)
 					procs.push(cont);
-				rem(receivers, n);
+				crem(receivers, n);
 			}else{
 				senders.push(n = [val, cont, senders.length]);
 				return function(){
-					rem(senders, n[2]);
+					crem(senders, n[2]);
 				};
 			}
 		}
 
-		return [send, recv];
+		function recvpoll(){
+			print("recvpoll() = " + senders.length);
+			return senders.length;
+		}
+
+		function sendpoll(){
+			print("sendpoll() = " + receivers.length);
+			return receivers.length;
+		}
+
+		return [send, recv, sendpoll, recvpoll];
 	}
 
 	function alt(ptr, dst, cont){
-		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], x, t;
+		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], ready, x, t, c;
 
+		print("alt; ns = " + ns + "; nr = " + nr);
 		function abortfn(n){
 			return function(){
-				var x;
+				print("abort; n = " + n);
 
-				for(x = 0; x < aborts.length; x++)
-					if(x != n)
-						aborts[x]();
+				abortfnd(n);
 				dst[1][dst[0]] = n;
 				procs.push(cont);
 			};
 		}
 
-		// hopefully these are actually channels and pointers
-		for(x = 0; x < ns; x++){
-			t = ptr[1][ptr[0] + 8 + x*4 + 4]; // pointer to val
-			aborts.push(ptr[1][ptr[0] + 8 + x*4][0](t[1][t[0]], abortfn(aborts.length)));
+		function abortfnd(n){
+			print("abortfnd(" + n + ")");
+			var x;
+
+			for(x = 0; x < aborts.length; x++)
+				if(x != n){
+					print("aborts[" + x + "]()");
+					aborts[x]();
+				}
 		}
-		for(x = 0; x < nr; x++)
-			aborts.push(ptr[1][ptr[0] + 8 + ns*8 + x*4][1](ptr[1][ptr[0] + 8 + ns*8 + x*4 + 4], abortfn(aborts.length)));
+
+		// hopefully these are actually channels and pointers
+		for(x = 0; x < ns + nr; x++){
+			print("alt.for");
+			t = ptr[1][ptr[0] + 8 + x*8 + 4]; // val pointer
+			c = ptr[1][ptr[0] + 8 + x*8];
+			if(c[x < ns? 2 : 3]()){
+				print("alt.for.if1");
+				if(aborts){
+					print("alt.for.if1.if");
+					abortfnd(-1);
+					aborts = undefined;
+					ready = [];
+				}
+				ready.push(x);
+			}else if(aborts){
+				print("alt.for.if2");
+				if(x < ns)
+					aborts.push(c[0](t[1][t[0]], abortfn(x)));
+				else
+					aborts.push(c[1](t, abortfn(x)));
+			}
+		}
 	}
 
 	// loader :: (string, [importing]) -> [exporting]
@@ -442,9 +478,23 @@ var dis = function(){
 		code.push(" for(ic = 0; ic++ < 10000;) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
 			code.push("  case " + x + ":");
+			code.push("  print(\"pc = " + x + "\");");
 			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
+					break;
+				case 0x01: // alt
+					code.push("   fps[2] = " + (x + 1) + ";");
+					code.push("   alt(" + operand(ins, 1, true) + ", " + operand(ins, 2, true) + ", function(){");
+					code.push("    return main(fps, ret);");
+					code.push("   });");
+					code.push("   return;");
+					break;
+				case 0x03: // goto
+					code.push("   pc = " + operand(ins, 2, true) + ";");
+					code.push("   pc = pc[1][pc[0] + " + operand(ins, 1) + "*4];");
+					code.push("   print(\"mov -> \" + pc);");
+					code.push("   break;");
 					break;
 				case 0x04: // call
 					code.push("   fps[2] = " + (x + 1) + ";");
@@ -655,7 +705,7 @@ var dis = function(){
 		code.push("}");
 		//return code.join("\n");
 		print(code.join("\n"));
-		return Function("exports", "entry", "imports", "exporter", "loader", "spawner", "channel", "insc", "newmp", code.join("\n"))(
+		return Function("exports", "entry", "imports", "exporter", "loader", "spawner", "channel", "insc", "alt", "newmp", code.join("\n"))(
 			source.links,
 			source.entry_pc,
 			source.imports,
@@ -664,6 +714,7 @@ var dis = function(){
 			spawner,
 			channel,
 			insc,
+			alt,
 			function(data){ // trying not to keep a reference to `source`
 				return function newmp(){
 					return makemp(data);
