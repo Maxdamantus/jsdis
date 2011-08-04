@@ -32,13 +32,14 @@ init(x: ref Draw->Context, y: list of string){
 	d := chan of int;
 	e := chan of int;
 
-	spawn w(a, e);
-	spawn w(b, e);
-	<-e; <-e;
+	spawn w(a, nil);
+	spawn w(b, nil);
+	spawn w(c, nil);
+	#<-e; <-e;
 
 	sys->print("about to alt\n");
 
-	#for(;;)
+	for(;;)
 		alt{
 			<-c =>
 				sys->print("got c\n");
@@ -53,6 +54,7 @@ w(g: chan of int, e: chan of int){
 	if(e != nil)
 		spawn w(e, nil);
 	g<- = 42;
+	spawn w(g, nil);
 }
 
 #se(s: string): int{

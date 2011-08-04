@@ -15,8 +15,9 @@ init(c: ref Draw->Context, a: list of string){
 	for(i := 0; i < len test; i++)
 		test[i] = i;
 	randomise(test);
-	sys->print("before:\n");
-	printarr(test);
+	#sys->print("before:\n");
+	#printarr(test);
+	spawn init(c, a);
 	parasort(test, nil);
 	sys->print("after:\n");
 	printarr(test);

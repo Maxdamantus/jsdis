@@ -369,7 +369,7 @@ var dis = function(){
 			if(c[x < ns? 2 : 3]()){
 				print("alt.for.if1");
 				if(aborts){
-					print("alt.for.if1.if");
+					print("alt.for.if1.if; x = " + x);
 					abortfnd(-1);
 					aborts = undefined;
 					ready = [];
@@ -386,7 +386,7 @@ var dis = function(){
 
 		if(ready){
 			print("** ready");
-			x = Math.floor(Math.random() * ready.length);
+			x = ready[Math.floor(Math.random() * ready.length)];
 			t = ptr[1][ptr[0] + 8 + x*8 + 4];
 			c = ptr[1][ptr[0] + 8 + x*8];
 			if(x < ns)
