@@ -264,32 +264,41 @@ var dis = function(){
 		return procs.push(fun) - 1;
 	}
 
-	function crem(arr, n){
-		print("crem; arr.length = " + arr.length + "; n = " + n);
+	function crem(arr, n, s){
+		print("crem(" + s + "); arr.length = " + arr.length + "; n = " + n);
+		var x;
+		for(x = 0; x < arr.length; x++)
+			print("crem: arr[" + x + "][2] = " + arr[x][2]);
 		if(n == arr.length - 1)
 			arr.pop();
 		else{
+			print("arr[" + n + "] = arr.pop()");
 			arr[n] = arr.pop();
+			print("arr[" + n + "][2] = n");
 			arr[n][2] = n;
 		}
 	}
 
+	var channelc = 0;
 	function channel(){
+		var cid = channelc++;
 		var receivers = [], senders = [];
 
 		function recv(ptr, cont){
 			var n;
 
-			if(senders.length > 0){
+			if(senders.length){
 				ptr[1][ptr[0]] = senders[n = Math.random()*senders.length | 0][0];
+				print("removing senders[" + n + "]");
 				procs.push(senders[n][1]);
 				if(cont)
 					procs.push(cont);
-				crem(senders, n);
+				crem(senders, n, "crem receivers, cid = " + cid);
 			}else{
-				receivers.push(n = [ptr, cont, receivers.length]);
+				print("receivers.push (cid = " + cid + ") = " + 
+				receivers.push(n = [ptr, cont, receivers.length]));
 				return function(){
-					crem(receivers, n[2]);
+					crem(receivers, n[2], "crem receivers, cid = " + cid);
 				};
 			}
 		}
@@ -297,17 +306,19 @@ var dis = function(){
 		function send(val, cont){
 			var n, ptr;
 
-			if(receivers.length > 0){
+			if(receivers.length){
 				ptr = receivers[n = Math.random()*receivers.length | 0][0];
+				print("removing receivers[" + n + "]");
 				ptr[1][ptr[0]] = val;
 				procs.push(receivers[n][1]);
 				if(cont)
 					procs.push(cont);
-				crem(receivers, n);
+				crem(receivers, n, "crem receivers, cid = " + cid);
 			}else{
-				senders.push(n = [val, cont, senders.length]);
+				print("senders.push (cid = " + cid + ") = " +
+				senders.push(n = [val, cont, senders.length]));
 				return function(){
-					crem(senders, n[2]);
+					crem(senders, n[2], "crem receivers, cid = " + cid);
 				};
 			}
 		}
@@ -340,10 +351,10 @@ var dis = function(){
 		}
 
 		function abortfnd(n){
-			print("abortfnd(" + n + ")");
+			print("abortfnd(" + n + "); aborts.length = " + aborts.length);
 			var x;
 
-			for(x = 0; x < aborts.length; x++)
+			for(x = aborts.length - 1; x >= 0; x--)
 				if(x != n){
 					print("aborts[" + x + "]()");
 					aborts[x]();
@@ -371,6 +382,18 @@ var dis = function(){
 				else
 					aborts.push(c[1](t, abortfn(x)));
 			}
+		}
+
+		if(ready){
+			print("** ready");
+			x = Math.floor(Math.random() * ready.length);
+			t = ptr[1][ptr[0] + 8 + x*8 + 4];
+			c = ptr[1][ptr[0] + 8 + x*8];
+			if(x < ns)
+				c[0](t[1][t[0]], cont);
+			else
+				c[1](t, cont);
+			dst[1][dst[0]] = x;
 		}
 	}
 

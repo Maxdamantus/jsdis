@@ -22,22 +22,36 @@ init(x: ref Draw->Context, y: list of string){
 #	spawn loop(1000000, b := chan of int);
 #	spawn loop(100000, c := chan of int);
 
-	spawn w(a := chan of int);
-	spawn w(b := chan of int);
+#	spawn w(a := chan of int);
+#	spawn w(b := chan of int);
 #	spawn w(c := chan of int);
 
-	for(;;)
+	a := chan of int;
+	b := chan of int;
+	c := chan of int;
+	d := chan of int;
+	e := chan of int;
+
+	spawn w(a, e);
+	spawn w(b, e);
+	<-e; <-e;
+
+	sys->print("about to alt\n");
+
+	#for(;;)
 		alt{
+			<-c =>
+				sys->print("got c\n");
 			<-a =>
 				sys->print("got a\n");
 			<-b =>
 				sys->print("got b\n");
-			#<-c =>
-			#	sys->print("got c\n");
 		}
 }
 
-w(g: chan of int){
+w(g: chan of int, e: chan of int){
+	if(e != nil)
+		spawn w(e, nil);
 	g<- = 42;
 }
 
