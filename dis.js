@@ -1,3 +1,5 @@
+"use strict";
+
 var test = snarf("AltTest.dis");
 
 function showstuff(s){
@@ -337,7 +339,7 @@ var dis = function(){
 	}
 
 	function alt(ptr, dst, cont){
-		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], ready, x, t, c;
+		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], ready = [], x, t, c;
 
 		print("alt; ns = " + ns + "; nr = " + nr);
 		function abortfn(n){
@@ -356,7 +358,7 @@ var dis = function(){
 
 			for(x = aborts.length - 1; x >= 0; x--)
 				if(x != n){
-					print("aborts[" + x + "]()");
+					print("(aborts[" + x + "] = " + aborts[x] + ")()");
 					aborts[x]();
 				}
 		}
@@ -368,23 +370,10 @@ var dis = function(){
 			c = ptr[1][ptr[0] + 8 + x*8];
 			if(c[x < ns? 2 : 3]()){
 				print("alt.for.if1");
-				if(aborts){
-					print("alt.for.if1.if; x = " + x);
-					abortfnd(-1);
-					aborts = undefined;
-					ready = [];
-				}
 				ready.push(x);
-			}else if(aborts){
-				print("alt.for.if2");
-				if(x < ns)
-					aborts.push(c[0](t[1][t[0]], abortfn(x)));
-				else
-					aborts.push(c[1](t, abortfn(x)));
 			}
 		}
-
-		if(ready){
+		if(ready.length){
 			print("** ready");
 			x = ready[Math.floor(Math.random() * ready.length)];
 			t = ptr[1][ptr[0] + 8 + x*8 + 4];
@@ -394,7 +383,19 @@ var dis = function(){
 			else
 				c[1](t, cont);
 			dst[1][dst[0]] = x;
+		}else{
+			print("** need to wait");
+			for(x = 0; x < ns + nr; x++){
+				t = ptr[1][ptr[0] + 8 + x*8 + 4];
+				c = ptr[1][ptr[0] + 8 + x*8];
+				if(x < ns)
+					aborts.push(c[0](t[1][t[0]], abortfn(x)));
+				else
+					aborts.push(c[1](t, abortfn(x)));
+			}
 		}
+
+		print("end alt");
 	}
 
 	// loader :: (string, [importing]) -> [exporting]
