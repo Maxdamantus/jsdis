@@ -1,6 +1,6 @@
 "use strict";
 
-var test = snarf("RandTest.dis");
+var test = snarf("AltTest.dis");
 
 function showstuff(s){
 	var r = "", i;
@@ -266,63 +266,54 @@ var dis = function(){
 		return procs.push(fun) - 1;
 	}
 
-	function crem(arr, n, s){
-		print("crem(" + s + "); arr.length = " + arr.length + "; n = " + n);
-		var x;
-		for(x = 0; x < arr.length; x++)
-			print("crem: arr[" + x + "][2] = " + arr[x][2]);
-		if(n == arr.length - 1)
-			arr.pop();
-		else{
-			print("arr[" + n + "] = arr.pop()");
-			arr[n] = arr.pop();
-			print("arr[" + n + "][2] = n");
-			arr[n][2] = n;
-		}
-	}
-
 	var channelc = 0;
 	function channel(){
 		var cid = channelc++;
 		var receivers = [], senders = [];
 
-		function recv(ptr, cont){
-			var n;
+		function recv(ptr, cont, altgrp){
+			var n, c;
 
-			if(senders.length){
-				ptr[1][ptr[0]] = senders[n = Math.random()*senders.length | 0][0];
-				print("removing senders[" + n + "]");
-				procs.push(senders[n][1]);
-				if(cont)
-					procs.push(cont);
-				crem(senders, n, "crem receivers, cid = " + cid);
-			}else{
-				print("receivers.push (cid = " + cid + ") = " + 
-				receivers.push(n = [ptr, cont, receivers.length]));
-				return function(){
-					crem(receivers, n[2], "crem receivers, cid = " + cid);
-				};
+			while(senders.length){
+				if((c = senders[n = Math.random()*senders.length | 0])[2] && c[2][0])
+					rem(senders, n);
+				else{
+					ptr[1][ptr[0]] = c[0];
+					procs.push(c[1]);
+					if(cont)
+						procs.push(cont);
+					if(c[2])
+						c[2][0] = true;
+					if(altgrp)
+						altgrp[0] = true;
+					rem(senders, n);
+					return;
+				}
 			}
+			receivers.push([ptr, cont, altgrp]);
 		}
 
-		function send(val, cont){
-			var n, ptr;
+		function send(val, cont, altgrp){
+			var n, ptr, c;
 
-			if(receivers.length){
-				ptr = receivers[n = Math.random()*receivers.length | 0][0];
-				print("removing receivers[" + n + "]");
-				ptr[1][ptr[0]] = val;
-				procs.push(receivers[n][1]);
-				if(cont)
-					procs.push(cont);
-				crem(receivers, n, "crem receivers, cid = " + cid);
-			}else{
-				print("senders.push (cid = " + cid + ") = " +
-				senders.push(n = [val, cont, senders.length]));
-				return function(){
-					crem(senders, n[2], "crem receivers, cid = " + cid);
-				};
+			while(receivers.length){
+				if((c = receivers[n = Math.random()*receivers.length | 0])[2] && c[2][0])
+					rem(receivers, n);
+				else{
+					ptr = c[0];
+					ptr[1][ptr[0]] = val;
+					procs.push(c[1]);
+					if(cont)
+						procs.push(cont);
+					if(c[2])
+						c[2][0] = true;
+					if(altgrp)
+						altgrp[0] = true;
+					rem(receivers, n);
+					return;
+				}
 			}
+			senders.push([val, cont, altgrp]);
 		}
 
 		function recvpoll(){
@@ -339,28 +330,15 @@ var dis = function(){
 	}
 
 	function alt(ptr, dst, cont){
-		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], aborts = [], ready = [], x, t, c;
+		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], grp = [false], x, t, c;
 
 		print("alt; ns = " + ns + "; nr = " + nr);
-		function abortfn(n){
+
+		function done(n){
 			return function(){
-				print("abort; n = " + n);
-
-				abortfnd(n);
 				dst[1][dst[0]] = n;
-				procs.push(cont);
+				return cont;
 			};
-		}
-
-		function abortfnd(n){
-			print("abortfnd(" + n + "); aborts.length = " + aborts.length);
-			var x;
-
-			for(x = aborts.length - 1; x >= 0; x--)
-				if(x != n){
-					print("(aborts[" + x + "] = " + aborts[x] + ")()");
-					aborts[x]();
-				}
 		}
 
 		// hopefully these are actually channels and pointers
@@ -368,33 +346,11 @@ var dis = function(){
 			print("alt.for");
 			t = ptr[1][ptr[0] + 8 + x*8 + 4]; // val pointer
 			c = ptr[1][ptr[0] + 8 + x*8];
-			if(c[x < ns? 2 : 3]()){
-				print("alt.for.if1");
-				ready.push(x);
-			}
-		}
-		if(ready.length){
-			print("** ready");
-			x = ready[Math.floor(Math.random() * ready.length)];
-			t = ptr[1][ptr[0] + 8 + x*8 + 4];
-			c = ptr[1][ptr[0] + 8 + x*8];
 			if(x < ns)
-				c[0](t[1][t[0]], cont);
+				c[0](t[1][t[0]], done(x));
 			else
-				c[1](t, cont);
-			dst[1][dst[0]] = x;
-		}else{
-			print("** need to wait");
-			for(x = 0; x < ns + nr; x++){
-				t = ptr[1][ptr[0] + 8 + x*8 + 4];
-				c = ptr[1][ptr[0] + 8 + x*8];
-				if(x < ns)
-					aborts.push(c[0](t[1][t[0]], abortfn(x)));
-				else
-					aborts.push(c[1](t, abortfn(x)));
-			}
+				c[1](t, done(x));
 		}
-
 		print("end alt");
 	}
 
