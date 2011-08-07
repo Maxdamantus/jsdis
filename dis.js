@@ -1,6 +1,6 @@
 "use strict";
 
-var test = snarf("AltTest.dis");
+var test = snarf("RandTest.dis");
 
 function showstuff(s){
 	var r = "", i;
@@ -465,6 +465,8 @@ var dis = function(){
 	// inter-module calls use exporting functions
 
 	function compile(source){
+		var instsperfibre = 1;
+
 		function operand(ins, i, addrof){
 			var n = ins[i + 1], j;
 			switch(n.length){
@@ -498,11 +500,11 @@ var dis = function(){
 		code.push("return function(importing){");
 		code.push("var mp = [0, newmp()], tmp, tmq, tmr;");
 		code.push("function main(fps, ret){");
-		code.push(" var fp = fps[1], pc = fps[2], ic;");
-		code.push(" for(ic = 0; ic++ < 10000;) switch(pc){");
+		code.push(" var fp = fps[1], pc = fps[2], ic, pcc;");
+		code.push(" for(ic = 0; ic < " + instsperfibre + ";) switch(pc){");
 		for(x = 0; x < source.code.length; x++){
 			code.push("  case " + x + ":");
-			code.push("  print(\"pc = " + x + "\");");
+			code.push("  //print(\"pc = " + x + "\");");
 			print("ins = " + showstuff(source.code[x]));
 			switch((ins = source.code[x])[0]){
 				case 0x00: // nop
@@ -515,12 +517,14 @@ var dis = function(){
 					code.push("   return;");
 					break;
 				case 0x03: // goto
+					code.push("   ic += " + x + " - pc;");
 					code.push("   pc = " + operand(ins, 2, true) + ";");
 					code.push("   pc = pc[1][pc[0] + " + operand(ins, 1) + "*4];");
 					code.push("   print(\"mov -> \" + pc);");
 					code.push("   break;");
 					break;
 				case 0x04: // call
+					code.push("   ic += " + x + " - pc;");
 					code.push("   fps[2] = " + (x + 1) + ";");
 					code.push("   fps = [fps, fp = " + operand(ins, 1) + ", pc = " + operand(ins, 2) + "];");
 					code.push("   break;");
@@ -549,6 +553,7 @@ var dis = function(){
 					code.push("   }(" + operand(ins, 2) + "[" + operand(ins, 0) + "], " + operand(ins, 1) + ");");
 					break;
 				case 0x0c: // ret
+					code.push("   ic += " + x + " - pc;");
 					code.push("   if(!(fps = fps[0]))");
 					code.push("    return ret;");
 					code.push("   fp = fps[1];");
@@ -556,6 +561,7 @@ var dis = function(){
 					code.push("   break;");
 					break;
 				case 0x0d: // jmp
+					code.push("   ic += " + x + " - pc;");
 					code.push("   pc = " + operand(ins, 2) + ";");
 					code.push("   break;");
 					break;
@@ -689,6 +695,7 @@ var dis = function(){
 						[0x61, 0x84, 0x67, 0x6d, 0x5b].indexOf(ins[0]) >= 0? ">" :
 						"!=") +
 						" " + operand(ins, 0) + "){");
+					code.push("    ic += " + x + " - pc;");
 					code.push("    pc = " + operand(ins, 2) + ";");
 					code.push("    break;");
 					code.push("   }");
@@ -706,6 +713,7 @@ var dis = function(){
 								operand(ins, 1) + "[1] == " + operand(ins, 0) + "[1]){");
 					else
 						code.push("   if(" + operand(ins, 1) + " == " + operand(ins, 0) + "){");
+					code.push("    ic += " + x + " - pc;");
 					code.push("    pc = " + operand(ins, 2) + ";");
 					code.push("    break;");
 					code.push("   }");
@@ -722,7 +730,7 @@ var dis = function(){
 		code.push("  default:");
 		code.push("   throw \"pc out of bounds\";");
 		code.push(" }");
-		code.push("fps[2] = 0;");
+		code.push("fps[2] = pc;");
 		code.push("return function(){ return main(fps, ret); };");
 		code.push("}");
 		code.push("return exporter(importing, exports, main);");
