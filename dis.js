@@ -275,6 +275,8 @@ var dis = function(){
 			var n, c;
 
 			while(senders.length){
+				print("senders.length = " + senders.length);
+				print("of that, done: " + senders.filter(function(a){ return !a[2] || !a[2][0]; }).length);
 				if((c = senders[n = Math.random()*senders.length | 0])[2] && c[2][0])
 					rem(senders, n);
 				else{
@@ -297,6 +299,8 @@ var dis = function(){
 			var n, ptr, c;
 
 			while(receivers.length){
+				print("receivers.length = " + receivers.length);
+				print("of that, done: " + receivers.filter(function(a){ return !a[2] || !a[2][0]; }).length);
 				if((c = receivers[n = Math.random()*receivers.length | 0])[2] && c[2][0])
 					rem(receivers, n);
 				else{

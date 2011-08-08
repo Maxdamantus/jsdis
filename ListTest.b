@@ -14,5 +14,6 @@ init(c: ref Draw->Context, a: list of string){
 	l := 42 :: 43 :: nil;
 	m := l;
 	m = tl m;
+	o := (123, 456) :: (789, 101) :: nil;
 	sys->print("%d %d %d\n", hd l, hd tl l, hd m);
 }
