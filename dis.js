@@ -1,6 +1,8 @@
 "use strict";
 
-var test = snarf("AltTest.dis");
+var vm = dis();
+vm.start(vm.compile(snarf("RandTest.dis")));
+while(vm.run() > 0);
 
 function showstuff(s){
 	var r = "", i;
@@ -26,9 +28,7 @@ function replicate(n, f){
 	return r;
 }
 
-var dis = function(){
-	var builtin;
-
+function dis(){
 	function comp(i, n){
 		return n == 32? i | 0 :
 			n < 32? i < 1 << n-1? i : i - (1 << n) :
@@ -184,11 +184,6 @@ var dis = function(){
 		return all();
 	}
 
-	function quotes(s){
-		// TODO: ..
-		return s.toSource();
-	}
-
 	function makemp(data){
 		var mp = [], ins, x, y, m;
 
@@ -256,10 +251,6 @@ var dis = function(){
 			arr.pop();
 		else
 			arr[n] = arr.pop();
-	}
-
-	function runall(){
-		while(run() > 0);
 	}
 
 	function spawner(fun){
@@ -424,7 +415,7 @@ var dis = function(){
 	// the exporting function returns a continuation
 	// inter-module calls use exporting functions
 
-	function compile(source){
+	function translate(source){
 		var instsperfibre = 1;
 
 		function operand(ins, i, addrof){
@@ -714,7 +705,7 @@ var dis = function(){
 			}(source.data));
 	}
 
-	builtin = {
+	var builtin = {
 		Sys: function(importing){
 			var x, ret = [];
 
@@ -764,9 +755,22 @@ var dis = function(){
 		return out.join("");
 	}
 
+	function compile(src){
+		return translate(read(src));
+	}
+
+	return {
+		compile: compile,
+		getargs: getargs,
+		loader: loader,
+		run: run,
+		start: start
+	};
+
+
 	var t;
 	print(showstuff(t = read(test)));
-	/*print*/(showstuff(t = compile(t)));
+	/*print*/(showstuff(t = translate(t)));
 	start(t);
 	runall();
-}();
+}
