@@ -711,21 +711,31 @@ function dis(){
 		code.push("}");
 		//return code.join("\n");
 		print(code.join("\n"));
-		return Function("exports", "entry", "imports", "exporter", "loader", "spawner", "channel", "insc", "alt", "newmp", code.join("\n"))(
-			source.links,
-			source.entry_pc,
-			source.imports,
-			exporter,
-			loader,
-			spawner,
-			channel,
-			insc,
-			alt,
-			function(data){ // trying not to keep a reference to `source`
+
+		var passing = {
+			exports: source.links,
+			entry: source.entry_pc,
+			imports: source.imports,
+			exporter: exporter,
+			loader: loader,
+			spawner: spawner,
+			channel: channel,
+			insc: insc,
+			alt: alt,
+			newmp: function(data){ // trying not to keep a reference to `source`
 				return function newmp(){
 					return makemp(data);
 				};
-			}(source.data));
+			}(source.data)
+		};
+		var names = [], values = [];
+		for(var v in passing){
+			names.push(v);
+			values.push(passing[v]);
+		}
+		names.push(code.join("\n"));
+
+		return Function.apply(null, names).apply(null, values);
 	}
 
 	var builtin = {
