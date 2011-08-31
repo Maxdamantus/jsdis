@@ -1,7 +1,7 @@
 "use strict";
 
 var vm = dis();
-vm.start(vm.compile(snarf("RandTest.dis")));
+vm.start(vm.compile(snarf("RealTest.dis")));
 while(vm.run() > 0);
 
 function showstuff(s){
@@ -58,7 +58,23 @@ function dis(){
 			return s.substr(x, i++ - x);
 		}
 
-		// TODO: ieee754
+		// (binary64)
+		function ieee754(){
+			var sign, exp, mant, b;
+
+			b = byte();
+			sign = b >> 7;
+			exp = b & 127;
+			b = byte();
+			exp <<= 4;
+			exp |= b >> 4;
+			mant = b & 15;
+			for(b = 0; b < 6; b++){
+				mant *= 1 << 8;
+				mant += byte();
+			}
+			return (sign? -1 : 1)*Math.pow(2, exp - 1023)*(1 + mant*Math.pow(2, -52));
+		}
 
 		function header(){
 			var r = {};
@@ -199,7 +215,8 @@ function dis(){
 					mp[ins.offset] = ins.data;
 					break;
 				case "ieee754":
-					// TODO: ..
+					for(y = 0; y < ins.data.length; y++)
+						mp[ins.offset + y*8] = ins.data[y];
 					break;
 				case "array":
 					for(y = 0; y < ins.data.length; y++)
@@ -597,6 +614,12 @@ function dis(){
 				case 0x76: // movl
 					code.push("   " + operand(ins, 2) + " = " + operand(ins, 1) + ";");
 					break;
+				case 0x3f: // mulb
+				case 0x40: // mulw
+				case 0x41: // mulf
+					code.push("   " + operand(ins, 2) + " = " + operand(ins, 0) + " * " + operand(ins, 1) + ";");
+					break;
+				// TODO: case 0x7b: // mull
 				case 0x3a: // addw
 				case 0x53: // addc
 				case 0x39: // addb
@@ -712,7 +735,7 @@ function dis(){
 			for(x = 0; x < importing.length; x++)
 				if(importing[x].name == "print" && importing[x].sig == comp(0xac849033, 32))
 					ret[x] = function(fp, cont){
-				//		print("fp = " + fp.toSource());
+						print("fp = " + fp.toSource());
 						print("sys->print: " + printx(getargs(fp)));
 						return cont;
 					};
@@ -739,6 +762,11 @@ function dis(){
 							out.push(args.dword()); // TODO: ..
 						else
 							out.push(args.word() | 0);
+						done = true;
+						break;
+					case "f":
+						// TODO: truncation, etc
+						out.push(Number(args.dword()));
 						done = true;
 						break;
 					case "b":
