@@ -28,6 +28,16 @@ function replicate(n, f){
 	return r;
 }
 
+function runWith(map, code){
+	var names = [], values = [];
+	for(var k in map){
+		names.push(k);
+		values.push(map[k]);
+	}
+	names.push(code);
+	return Function.apply(null, names).apply(null, values);
+}
+
 function dis(){
 	function comp(i, n){
 		return n == 32? i | 0 :
@@ -712,7 +722,7 @@ function dis(){
 		//return code.join("\n");
 		print(code.join("\n"));
 
-		var passing = {
+		return runWith({
 			exports: source.links,
 			entry: source.entry_pc,
 			imports: source.imports,
@@ -727,15 +737,7 @@ function dis(){
 					return makemp(data);
 				};
 			}(source.data)
-		};
-		var names = [], values = [];
-		for(var v in passing){
-			names.push(v);
-			values.push(passing[v]);
-		}
-		names.push(code.join("\n"));
-
-		return Function.apply(null, names).apply(null, values);
+		}, code.join("\n"));
 	}
 
 	var builtin = {
