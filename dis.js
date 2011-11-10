@@ -1,7 +1,7 @@
 "use strict";
 
 var vm = dis();
-vm.start(vm.compile(snarf("RealTest.dis")));
+vm.start(vm.compile(snarf("AltTest.dis")));
 while(vm.run() > 0);
 
 function showstuff(s){
@@ -261,6 +261,11 @@ function dis(){
 		});
 	}
 
+	function sched(fun){
+		if(fun)
+			procs.push(fun);
+	}
+
 	// keep calling this until it returns 0
 	function run(){
 		var r, n;
@@ -287,91 +292,116 @@ function dis(){
 	var channelc = 0;
 	function channel(){
 		var cid = channelc++;
-		var receivers = [], senders = [];
+		var Midle = 0, Mrecv = 1, Msend = 2;
+		var waiting = [], mode = Midle;
 
-		function recv(ptr, cont, altgrp){
-			var n, c;
-
-			while(senders.length){
-				print("senders.length = " + senders.length);
-				print("of that, done: " + senders.filter(function(a){ return !a[2] || !a[2][0]; }).length);
-				if((c = senders[n = Math.random()*senders.length | 0])[2] && c[2][0])
-					rem(senders, n);
-				else{
-					ptr[1][ptr[0]] = c[0];
-					procs.push(c[1]);
-					if(cont)
-						procs.push(cont);
-					if(c[2])
-						c[2][0] = true;
-					if(altgrp)
-						altgrp[0] = true;
-					rem(senders, n);
-					return;
-				}
+		function rem(n){
+			if(waiting[n[0]] == n){
+				if(waiting.length == n[0] + 1)
+					waiting.pop();
+				else
+					(waiting[n[0]] = waiting.pop())[0] = n[0];
 			}
-			receivers.push([ptr, cont, altgrp]);
+			if(waiting.length == 0)
+				mode = Midle;
 		}
 
-		function send(val, cont, altgrp){
-			var n, ptr, c;
+		function pick(){
+			var n, i;
 
-			while(receivers.length){
-				print("receivers.length = " + receivers.length);
-				print("of that, done: " + receivers.filter(function(a){ return !a[2] || !a[2][0]; }).length);
-				if((c = receivers[n = Math.random()*receivers.length | 0])[2] && c[2][0])
-					rem(receivers, n);
-				else{
-					ptr = c[0];
-					ptr[1][ptr[0]] = val;
-					procs.push(c[1]);
-					if(cont)
-						procs.push(cont);
-					if(c[2])
-						c[2][0] = true;
-					if(altgrp)
-						altgrp[0] = true;
-					rem(receivers, n);
-					return;
-				}
+			n = waiting[i = Math.random()*waiting.length | 0];
+			print(n[0] + " == " + i + "?");
+			rem(n);
+			return n;
+		}
+
+		function recv(ptr, cont){
+			var n, c;
+			print("recv: |waiting| = " + waiting.length);
+
+			if(mode == Msend){
+				n = pick();
+				ptr[1][ptr[0]] = n[1];
+				if(cont)
+					sched(cont());
+				if(n[2])
+					sched(n[2]());
+			}else{
+				mode = Mrecv;
+				waiting.push(n = [waiting.length, ptr, cont]);
+				return function(){
+					return rem(n);
+				};
 			}
-			senders.push([val, cont, altgrp]);
+		}
+
+		function send(val, cont){
+			var n, ptr, c;
+			print("recv: |waiting| = " + waiting.length);
+
+			if(mode == Mrecv){
+				n = pick();
+				ptr = n[1];
+				ptr[1][ptr[0]] = val;
+				if(cont)
+					sched(cont());
+				if(n[2])
+					sched(n[2]());
+			}else{
+				mode = Msend;
+				waiting.push(n = [waiting.length, val, cont]);
+				return function(){
+					return rem(n);
+				};
+			}
 		}
 
 		function recvpoll(){
-			print("recvpoll() = " + senders.length);
-			return senders.length;
+			return mode == Msend? waiting.length : 0;
 		}
 
 		function sendpoll(){
-			print("sendpoll() = " + receivers.length);
-			return receivers.length;
+			return mode == Mrecv? waiting.length : 0;
 		}
 
 		return [send, recv, sendpoll, recvpoll];
 	}
 
 	function alt(ptr, dst, cont){
-		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], grp = [false], x, t, c;
+		var ns = ptr[1][ptr[0]], nr = ptr[1][ptr[0] + 4], grp = [], inds = [], isdone = false, x, t, c;
 
 		print("alt; ns = " + ns + "; nr = " + nr);
 
 		function done(n){
 			return function(){
-				dst[1][dst[0]] = n;
-				return cont;
+				if(!isdone){
+					isdone = true;
+					for(var x = 0; x < grp.length; x++)
+						if(grp[x])
+							grp[x]();
+					dst[1][dst[0]] = n;
+					if(cont)
+						procs.push(cont);
+				}
 			};
 		}
 
+		for(x = 0; x < ns + nr; x++)
+			inds.push(x);
+
 		// hopefully these are actually channels and pointers
-		for(x = 0; x < ns + nr; x++){
+		while(!isdone && inds.length > 0){ //x < ns + nr; x++){
 			print("alt.for");
+			x = inds[t = Math.random()*inds.length | 0];
+			c = inds.pop();
+			if(t < inds.length)
+				inds[t] = c;
 			t = ptr[1][ptr[0] + 8 + x*8 + 4]; // val pointer
 			c = ptr[1][ptr[0] + 8 + x*8];
 			if(x < ns)
-				c[0](t[1][t[0]], done(x));
+				grp.push(c[0](t[1][t[0]], done(x)));
 			else
-				c[1](t, done(x));
+				grp.push(c[1](t, done(x)));
 		}
 		print("end alt");
 	}
@@ -747,7 +777,7 @@ function dis(){
 			for(x = 0; x < importing.length; x++)
 				if(importing[x].name == "print" && importing[x].sig == comp(0xac849033, 32))
 					ret[x] = function(fp, cont){
-						print("fp = " + fp.toSource());
+//						print("fp = " + fp.toSource());
 						print("sys->print: " + printx(getargs(fp)));
 						return cont;
 					};
